@@ -3,6 +3,7 @@
 import { motion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import { content } from "@/app/content";
+import { attachAudio, setPlaying as busPlaying } from "@/lib/audio-bus";
 import { Wave } from "./Ornaments";
 import { Reveal, Words, stagger } from "./motion/Reveal";
 
@@ -117,15 +118,19 @@ export function SteelySan() {
     const a = audioRef.current;
     if (!a) return;
     if (a.paused) {
+      attachAudio(a); // the flower field listens in
       try {
         await a.play();
         setPlaying(true);
+        busPlaying(true);
       } catch {
         setPlaying(false);
+        busPlaying(false);
       }
     } else {
       a.pause();
       setPlaying(false);
+      busPlaying(false);
     }
   }
 
@@ -164,7 +169,7 @@ export function SteelySan() {
     <section className="relative bg-sand">
       <Wave className="absolute -top-px left-0 h-16 sm:h-24" fill="var(--color-cream)" flip />
 
-      <audio ref={audioRef} loop preload="none" onEnded={() => setPlaying(false)}>
+      <audio ref={audioRef} loop preload="none" onEnded={() => { setPlaying(false); busPlaying(false); }}>
         <source src="/media/paradise.mp3" type="audio/mpeg" />
         <source src="/media/paradise.ogg" type="audio/ogg" />
       </audio>

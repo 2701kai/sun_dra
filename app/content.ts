@@ -14,7 +14,7 @@ export const content = {
     arc: "✿ happy birthday ✿",
     tagline: "free spirit, self-made paradise, best version yet",
     scroll: "scroll, wildly",
-    hint: "the flowers are draggable. everything else just moves.",
+    hint: "the flowers are draggable, the bee follows you, clicking anywhere makes more flowers. everything else just moves.",
   },
 
   marquee: [
@@ -38,6 +38,36 @@ export const content = {
     body:
       "Sandra travelled twenty thousand kilometres to arrive. Not somewhere. At herself. It turns out the longest road on earth leads to the one place nobody else can take you.",
     aside: "from where she started, to where she was always going",
+  },
+
+  journey: {
+    label: "the long way round",
+    title: "From Borkum to paradise.",
+    intro:
+      "Her own age of Aquarius, dawning. Another Kerouac novel's worth of road, an eternity of space and time to sail and travel, and an island at either end.",
+    bee: "lekker hommeltje",
+    stops: [
+      {
+        name: "Borkum",
+        sub: "North Sea · where it started",
+        text: "A small island with a lot of wind, and a girl with more horizon in her than there was island under her.",
+      },
+      {
+        name: "Amsterdam",
+        sub: "on the way",
+        text: "A stop that could have become a life. They called her lekker hommeltje there. But the little bumblebee had to fly on.",
+      },
+      {
+        name: "Everywhere between",
+        sub: "sailed and travelled",
+        text: "Roads, oceans, years. The kind of distance you don't measure in kilometres but in versions of yourself.",
+      },
+      {
+        name: "Aotearoa",
+        sub: "paradise · self-built",
+        text: "Twenty thousand kilometres later: orange trees, a river, a deck, a butterfly in the window. Home.",
+      },
+    ],
   },
 
   paradise: {

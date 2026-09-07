@@ -18,8 +18,10 @@ bun start
 Everything, on purpose. Motion (motion.dev) does the heavy lifting; only `transform`, `opacity` and `filter` are animated, and `prefers-reduced-motion` is honoured globally through `MotionConfig`.
 
 - **Hero**: sunburst scales with scroll, the sun springs up, the name bounces in letter by letter (hover a letter, it jumps), the flowers are draggable and float when you leave them alone.
-- **Ambient**: a rainbow scroll-progress bar, flowers and peace signs drifting up behind everything, a flower trail behind the cursor (mouse only).
+- **The flower field** (`components/motion/FlowerField.tsx`): a hand-rolled canvas particle system, no packages, in the spirit of the spores on Titis on Decks. Daisies drift like spores across the whole page, a bumblebee (the *lekker hommeltje*) follows your pointer and the flowers gather and bloom around it, a click or tap bursts a handful more, a fast bee sheds petals, and while the turntable plays the whole field pulses to the music through a Web Audio analyser (`lib/audio-bus.ts`). On phones the bee wanders on its own.
+- **Ambient**: a rainbow scroll-progress bar.
 - **20,000 km**: the number counts up, the road draws itself with a sun riding along it, the photo parallaxes and tilts.
+- **From Borkum to paradise**: the route draws itself, the stops pop in, and the hommeltje flies the whole way as you scroll (a wide route on landscape screens, a tall one on phones). Four stop cards below: Borkum, Amsterdam, everywhere between, Aotearoa. Add or rename stops in `content.ts`; the route geometry lives at the top of `components/Journey.tsx`.
 - **Paradise**: word-by-word headlines, the video frame drifts, the sound button pulses until pressed.
 - **The river**: ripples, two-speed parallax, photos straighten on hover.
 - **Sovereign**: lines slam in from alternating sides, peace signs rotate with scroll.
@@ -36,7 +38,7 @@ Everything, on purpose. Motion (motion.dev) does the heavy lifting; only `transf
   - `grin.mp4` / `grin.webm` + `grin-poster.jpg` (the tongue-out loop), `sandra-grin.gif` (same clip as a GIF)
   - `paradise.mp3` / `paradise.ogg` (the Steely San audio; drop any other track in under the same names)
 - **Colours and fonts** are Tailwind theme tokens at the top of `app/globals.css`. Shrikhand for display, Fraunces for everything else, both via `next/font/google`.
-- **Sections** are one component each in `components/`, stacked in `app/page.tsx`. Shared motion helpers (`Reveal`, `Words`, `Letters`, `confetti`, `Drift`, `CursorTrail`, `ScrollProgress`) live in `components/motion/`.
+- **Sections** are one component each in `components/`, stacked in `app/page.tsx`. Shared motion helpers (`Reveal`, `Words`, `Letters`, `confetti`, `ScrollProgress`, `FlowerField`) live in `components/motion/`.
 
 ## Deploy
 

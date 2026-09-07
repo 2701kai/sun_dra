@@ -1,8 +1,6 @@
 "use client";
 
-import { animate, motion, useReducedMotion, useScroll, useSpring } from "motion/react";
-import { useEffect, useMemo, useRef } from "react";
-import { Flower, Peace } from "../Ornaments";
+import { animate, motion, useScroll, useSpring } from "motion/react";
 
 /** Rainbow progress bar pinned to the top of the viewport. */
 export function ScrollProgress() {
@@ -15,89 +13,6 @@ export function ScrollProgress() {
       style={{ scaleX }}
     />
   );
-}
-
-type Bit = { id: number; x: number; size: number; duration: number; delay: number; kind: "flower" | "peace"; colour: string };
-
-/** Flowers and peace signs drifting up behind everything, all page long. */
-export function Drift({ count = 14 }: { count?: number }) {
-  const reduce = useReducedMotion();
-  const bits = useMemo<Bit[]>(() => {
-    const colours = ["text-pink", "text-teal", "text-orange", "text-avocado", "text-mustard", "text-ember"];
-    return Array.from({ length: count }, (_, i) => ({
-      id: i,
-      x: (i * 71) % 100,
-      size: 18 + ((i * 37) % 40),
-      duration: 18 + ((i * 13) % 16),
-      delay: -((i * 7) % 20),
-      kind: i % 4 === 0 ? "peace" : "flower",
-      colour: colours[i % colours.length],
-    }));
-  }, [count]);
-
-  if (reduce) return null;
-
-  return (
-    <div aria-hidden="true" className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
-      {bits.map((b) => (
-        <motion.div
-          key={b.id}
-          className={`absolute opacity-25 ${b.colour}`}
-          style={{ left: `${b.x}vw`, width: b.size, bottom: -b.size * 2 }}
-          animate={{ y: ["0vh", "-120vh"], rotate: [0, b.id % 2 ? 360 : -360], x: [0, 30, -30, 0] }}
-          transition={{
-            y: { duration: b.duration, repeat: Infinity, ease: "linear", delay: b.delay },
-            rotate: { duration: b.duration, repeat: Infinity, ease: "linear", delay: b.delay },
-            x: { duration: b.duration / 3, repeat: Infinity, ease: "easeInOut", delay: b.delay },
-          }}
-        >
-          {b.kind === "peace" ? <Peace className="w-full" /> : <Flower className="w-full" />}
-        </motion.div>
-      ))}
-    </div>
-  );
-}
-
-/** Little flowers that bloom wherever the pointer goes, then fade. Mouse only. */
-export function CursorTrail() {
-  const reduce = useReducedMotion();
-  const layer = useRef<HTMLDivElement>(null);
-  const last = useRef(0);
-
-  useEffect(() => {
-    if (reduce) return;
-    if (!window.matchMedia("(pointer: fine)").matches) return;
-    const colours = ["#e36ba8", "#2f8f8a", "#d9622b", "#7a8b3e", "#e4a93a"];
-    let n = 0;
-
-    function onMove(e: PointerEvent) {
-      const now = performance.now();
-      if (now - last.current < 55) return;
-      last.current = now;
-      const host = layer.current;
-      if (!host || host.childElementCount > 28) return;
-
-      const el = document.createElement("div");
-      const size = 10 + Math.random() * 14;
-      el.style.cssText = `position:absolute;left:${e.clientX - size / 2}px;top:${e.clientY - size / 2}px;width:${size}px;height:${size}px;color:${colours[n++ % colours.length]};pointer-events:none;`;
-      el.innerHTML =
-        '<svg viewBox="0 0 100 100" width="100%" height="100%"><g fill="currentColor">' +
-        [0, 60, 120].map((r) => `<ellipse cx="50" cy="50" rx="48" ry="16" transform="rotate(${r} 50 50)"/>`).join("") +
-        '</g><circle cx="50" cy="50" r="12" fill="#f6ead2"/></svg>';
-      host.appendChild(el);
-
-      animate(
-        el,
-        { scale: [0, 1.2, 0], rotate: [0, 90 + Math.random() * 120], y: [0, -30 - Math.random() * 30], opacity: [1, 1, 0] },
-        { duration: 0.9 + Math.random() * 0.4, ease: "easeOut" },
-      ).then(() => el.remove());
-    }
-
-    window.addEventListener("pointermove", onMove, { passive: true });
-    return () => window.removeEventListener("pointermove", onMove);
-  }, [reduce]);
-
-  return <div ref={layer} aria-hidden="true" className="pointer-events-none fixed inset-0 z-[65]" />;
 }
 
 /** Throws a pile of confetti from a point. Works on any element; falls back to the viewport centre. */
