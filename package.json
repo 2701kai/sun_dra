@@ -1,0 +1,31 @@
+{
+  "name": "sun_dra",
+  "version": "1.0.0",
+  "private": true,
+  "description": "sun_dra: an over-the-top 70s birthday celebration for Sandra, a free spirit in her self-made paradise",
+  "author": "2701kai",
+  "license": "UNLICENSED",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "motion": "13.2.0",
+    "next": "16.3.4",
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "4.3.3",
+    "@types/node": "26.4.1",
+    "@types/react": "19.2.18",
+    "@types/react-dom": "19.2.7",
+    "tailwindcss": "4.3.3",
+    "typescript": "7.0.2"
+  },
+  "engines": {
+    "bun": ">=1.3"
+  }
+}
